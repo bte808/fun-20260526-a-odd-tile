@@ -2,6 +2,7 @@ import { readFileSync, statSync } from "node:fs";
 
 const requiredFiles = [
   "index.html",
+  "favicon.svg",
   "styles.css",
   "src/app.js",
   "src/game.js",
