@@ -1,0 +1,17 @@
+{
+  "name": "fun-20260526-a-odd-tile",
+  "version": "1.0.0",
+  "description": "A tiny daily visual sprint where you find the one tile that breaks the pattern.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "check": "node scripts/check-files.mjs"
+  },
+  "keywords": [
+    "browser-game",
+    "daily-puzzle",
+    "visual-puzzle",
+    "static-site"
+  ],
+  "license": "MIT"
+}
