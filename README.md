@@ -6,6 +6,7 @@ Odd Tile Sprint is a tiny daily browser game: scan a generated grid and click th
 
 - Creates a deterministic daily sprint from the Asia/Shanghai day.
 - Runs six rounds with 4x4, 5x5, and 6x6 visual boards.
+- Lets you study the first board before the timer starts on your first tap.
 - Scores fast correct hits, streaks, and deeper rounds.
 - Gives immediate miss, timeout, and completion feedback.
 - Works as a static site with no account, backend, build step, or API key.
@@ -21,10 +22,11 @@ The odd tile is not always louder. Sometimes it is a shifted dot, sometimes a ro
 ## Core loop
 
 1. Open the page.
-2. Find and tap the one tile that breaks the pattern.
-3. Chain fast hits for a better score.
-4. Finish six rounds or lose after three misses.
-5. Copy the result text if you want to share the run.
+2. Study the board; the timer starts on your first tap.
+3. Find and tap the one tile that breaks the pattern.
+4. Chain fast hits for a better score.
+5. Finish six rounds or lose after three misses.
+6. Copy the result text if you want to share the run.
 
 ## How to run
 
@@ -50,7 +52,7 @@ Reference starting points:
 
 - `npm test` checks deterministic generation, one odd tile per board, scoring, and result text.
 - `npm run check` checks required files and static app wiring.
-- Local browser verification covered a desktop run path and a 390x844 mobile viewport without horizontal overflow.
+- Local browser verification covered a desktop run path, first-tap timer start, and a 390x844 mobile viewport without horizontal overflow.
 
 ## Future ideas
 

@@ -34,9 +34,10 @@ function resetState() {
     misses: 0,
     streak: 0,
     secondsLeft: sprint[0].seconds,
+    started: false,
     locked: false,
     completed: false,
-    startedAt: Date.now()
+    startedAt: 0
   };
 }
 
@@ -91,6 +92,7 @@ function renderHud() {
 
 function revealOdd() {
   const round = currentRound();
+  if (!round) return;
   const oddTile = elements.board.querySelector(`[data-index="${round.oddIndex}"]`);
   if (oddTile) oddTile.classList.add("revealed");
 }
@@ -119,6 +121,11 @@ function advanceRound() {
 
 function chooseTile(index, button) {
   if (state.locked || state.completed) return;
+  if (!state.started) {
+    state.started = true;
+    state.startedAt = Date.now();
+  }
+
   const round = currentRound();
   if (index === round.oddIndex) {
     state.locked = true;
@@ -149,7 +156,7 @@ function chooseTile(index, button) {
 }
 
 function tick() {
-  if (state.locked || state.completed) return;
+  if (!state.started || state.locked || state.completed) return;
   state.secondsLeft = Math.max(0, state.secondsLeft - 0.1);
   if (state.secondsLeft <= 0) {
     state.streak = 0;
@@ -173,7 +180,7 @@ function start() {
   resetState();
   renderBoard();
   renderHud();
-  setFeedback("Tap any tile to start the sprint.");
+  setFeedback("Study the board. First tap starts the timer.");
   ticker = window.setInterval(tick, 100);
 }
 
