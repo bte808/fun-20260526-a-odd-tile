@@ -28,6 +28,18 @@ body {
     var(--paper);
 }
 
+body.high-contrast {
+  --ink: #0f172a;
+  --muted: #334155;
+  --paper: #f8fafc;
+  --panel: #ffffff;
+  --line: #0f172a;
+  --accent: #005fcc;
+  --accent-strong: #004c9e;
+  --danger: #b42318;
+  --good: #067647;
+}
+
 button {
   font: inherit;
 }
@@ -251,10 +263,50 @@ h1 {
   background: #ffffff;
 }
 
+.actions button[aria-pressed="true"] {
+  color: #ffffff;
+  border-color: var(--accent-strong);
+  background: #0f172a;
+}
+
 .actions button:disabled {
   color: #8c9692;
   background: #ece8df;
   cursor: not-allowed;
+}
+
+body.high-contrast .stage,
+body.high-contrast .metric {
+  background: #ffffff;
+}
+
+body.high-contrast .tile {
+  border-color: rgba(15, 23, 42, 0.72);
+  background:
+    radial-gradient(circle at var(--dot-x, 50%) var(--dot-y, 50%), #020617 0 11%, transparent 12%),
+    linear-gradient(var(--turn, 45deg), transparent 0 35%, rgba(255, 255, 255, 0.92) 36% 49%, transparent 50% 100%),
+    repeating-linear-gradient(
+      calc(var(--inner-turn, 0deg) + 25deg),
+      rgba(15, 23, 42, 0.26) 0 7px,
+      rgba(255, 255, 255, 0.78) 7px 14px
+    ),
+    linear-gradient(135deg, hsl(var(--hue), 88%, 78%), hsl(var(--hue), 86%, 34%));
+  filter: contrast(1.22) saturate(1.25);
+}
+
+body.high-contrast .tile::before {
+  border-color: rgba(2, 6, 23, 0.86);
+}
+
+body.high-contrast .tile::after {
+  background: #020617;
+}
+
+body.high-contrast .tile:hover,
+body.high-contrast .tile:focus-visible {
+  box-shadow:
+    0 0 0 4px rgba(0, 95, 204, 0.28),
+    inset 0 0 0 2px #ffffff;
 }
 
 @media (max-width: 620px) {

@@ -44,3 +44,29 @@ test("result text summarizes final state", () => {
   assert.match(text, /cleared 6\/6/);
   assert.match(text, new RegExp(`1/${MISS_LIMIT}`));
 });
+
+test("result text can include high contrast assist state", () => {
+  const text = resultText({
+    seedKey: "2026-05-26",
+    score: 360,
+    roundsCleared: 2,
+    misses: 0,
+    completed: false,
+    highContrast: true
+  });
+
+  assert.match(text, /High-contrast mode on/);
+});
+
+test("result text reports only cleared rounds", () => {
+  const text = resultText({
+    seedKey: "2026-05-26",
+    score: 120,
+    roundsCleared: 1,
+    misses: 1,
+    completed: false
+  });
+
+  assert.match(text, /stopped 1\/6/);
+  assert.doesNotMatch(text, /stopped 2\/6/);
+});

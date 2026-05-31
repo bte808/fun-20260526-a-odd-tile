@@ -11,6 +11,8 @@
     "browser-game",
     "daily-puzzle",
     "visual-puzzle",
+    "high-contrast",
+    "accessibility",
     "static-site"
   ],
   "license": "MIT"

@@ -17,12 +17,32 @@ const elements = {
   prompt: document.querySelector("#prompt"),
   restart: document.querySelector("#restart"),
   newRound: document.querySelector("#new-round"),
+  contrastToggle: document.querySelector("#contrast-toggle"),
   copyScore: document.querySelector("#copy-score")
 };
+
+const CONTRAST_STORAGE_KEY = "oddTileHighContrast";
 
 let sprint = [];
 let state = {};
 let ticker = 0;
+let highContrast = readContrastPreference();
+
+function readContrastPreference() {
+  try {
+    return window.localStorage.getItem(CONTRAST_STORAGE_KEY) === "true";
+  } catch {
+    return false;
+  }
+}
+
+function saveContrastPreference(enabled) {
+  try {
+    window.localStorage.setItem(CONTRAST_STORAGE_KEY, String(enabled));
+  } catch {
+    // The toggle still works for this page load if storage is unavailable.
+  }
+}
 
 function resetState() {
   const seedKey = todayKey();
@@ -30,6 +50,7 @@ function resetState() {
   state = {
     seedKey,
     roundIndex: 0,
+    roundsCleared: 0,
     score: 0,
     misses: 0,
     streak: 0,
@@ -60,6 +81,19 @@ function tileStyle(tile) {
 function setFeedback(message, tone = "") {
   elements.feedback.className = `feedback ${tone}`.trim();
   elements.feedback.textContent = message;
+}
+
+function applyContrastPreference(enabled) {
+  highContrast = enabled;
+  document.body.classList.toggle("high-contrast", highContrast);
+  elements.contrastToggle.textContent = highContrast ? "Standard Colors" : "High Contrast";
+  elements.contrastToggle.setAttribute("aria-pressed", String(highContrast));
+}
+
+function toggleContrast() {
+  applyContrastPreference(!highContrast);
+  saveContrastPreference(highContrast);
+  setFeedback(highContrast ? "High contrast tiles enabled." : "Standard tile colors restored.", "good");
 }
 
 function currentRound() {
@@ -136,6 +170,7 @@ function chooseTile(index, button) {
       streak: state.streak
     });
     state.score += gained;
+    state.roundsCleared += 1;
     button.classList.add("revealed");
     setFeedback(`Hit. +${gained} points.`, "good");
     renderHud();
@@ -188,9 +223,10 @@ async function copyResult() {
   const text = resultText({
     seedKey: state.seedKey,
     score: state.score,
-    roundsCleared: Math.min(state.roundIndex, TOTAL_ROUNDS),
+    roundsCleared: Math.min(state.roundsCleared, TOTAL_ROUNDS),
     misses: state.misses,
-    completed: state.completed && state.roundIndex >= TOTAL_ROUNDS
+    completed: state.completed && state.roundsCleared >= TOTAL_ROUNDS,
+    highContrast
   });
 
   try {
@@ -203,8 +239,10 @@ async function copyResult() {
 
 elements.restart.addEventListener("click", start);
 elements.newRound.addEventListener("click", start);
+elements.contrastToggle.addEventListener("click", toggleContrast);
 elements.copyScore.addEventListener("click", copyResult);
 
+applyContrastPreference(highContrast);
 start();
 
 window.__ODD_TILE_DEBUG__ = {

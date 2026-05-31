@@ -127,9 +127,10 @@ function scoreHit({ secondsLeft, roundIndex, streak }) {
   return 120 + speed + roundBonus + streakBonus;
 }
 
-function resultText({ seedKey, score, roundsCleared, misses, completed }) {
+function resultText({ seedKey, score, roundsCleared, misses, completed, highContrast = false }) {
   const outcome = completed ? "cleared" : "stopped";
-  return `Odd Tile Sprint ${seedKey}: ${outcome} ${roundsCleared}/${TOTAL_ROUNDS}, ${score} pts, ${misses}/${MISS_LIMIT} misses.`;
+  const assist = highContrast ? " High-contrast mode on." : "";
+  return `Odd Tile Sprint ${seedKey}: ${outcome} ${roundsCleared}/${TOTAL_ROUNDS}, ${score} pts, ${misses}/${MISS_LIMIT} misses.${assist}`;
 }
 
 export {

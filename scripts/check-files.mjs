@@ -25,8 +25,11 @@ const readme = readFileSync("README.md", "utf8");
 
 const checks = [
   [html.includes('<div id="board"'), "index.html should include the board mount"],
+  [html.includes('id="contrast-toggle"'), "index.html should include the contrast toggle"],
   [html.includes('type="module"'), "index.html should load module JavaScript"],
   [app.includes("window.__ODD_TILE_DEBUG__"), "app should expose a small browser debug hook"],
+  [app.includes("oddTileHighContrast"), "app should persist the contrast preference"],
+  [css.includes("body.high-contrast"), "styles should include high contrast rules"],
   [css.includes("@media (max-width: 620px)"), "styles should include mobile layout rules"],
   [readme.includes("How to run"), "README should explain how to run"],
   [readme.includes("Inspiration"), "README should document public inspiration"]

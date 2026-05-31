@@ -7,8 +7,10 @@ Odd Tile Sprint is a tiny daily browser game: scan a generated grid and click th
 - Creates a deterministic daily sprint from the Asia/Shanghai day.
 - Runs six rounds with 4x4, 5x5, and 6x6 visual boards.
 - Lets you study the first board before the timer starts on your first tap.
+- Includes a high-contrast tile mode that stays on for later visits.
 - Scores fast correct hits, streaks, and deeper rounds.
 - Gives immediate miss, timeout, and completion feedback.
+- Copies shareable result text, including whether high-contrast mode was used.
 - Works as a static site with no account, backend, build step, or API key.
 
 ## Why it is useful
@@ -24,9 +26,10 @@ The odd tile is not always louder. Sometimes it is a shifted dot, sometimes a ro
 1. Open the page.
 2. Study the board; the timer starts on your first tap.
 3. Find and tap the one tile that breaks the pattern.
-4. Chain fast hits for a better score.
-5. Finish six rounds or lose after three misses.
-6. Copy the result text if you want to share the run.
+4. Turn on High Contrast if the tile differences are too subtle on your screen.
+5. Chain fast hits for a better score.
+6. Finish six rounds or lose after three misses.
+7. Copy the result text if you want to share the run.
 
 ## How to run
 
@@ -51,12 +54,11 @@ Reference starting points:
 ## Verification
 
 - `npm test` checks deterministic generation, one odd tile per board, scoring, and result text.
-- `npm run check` checks required files and static app wiring.
+- `npm run check` checks required files, static app wiring, and the high-contrast control.
 - Local browser verification covered a desktop run path, first-tap timer start, and a 390x844 mobile viewport without horizontal overflow.
 
 ## Future ideas
 
 - Add a daily streak stored locally.
-- Add a colorblind high-contrast mode.
 - Add a replay card image generator.
 - Add seed sharing for custom challenge links.
